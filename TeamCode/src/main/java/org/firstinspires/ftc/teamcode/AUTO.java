@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+// Import libraries for robot and camera stuff
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -12,10 +13,12 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
+// Setup OpMode for autonomous
 @Autonomous(name = "AUTO (Blocks to Java)", preselectTeleOp = "Derek Jr.")
 @Disabled
 public class AUTO extends LinearOpMode {
 
+    // Declare motors
   private DcMotor leftshooterMotor;
   private DcMotor rightshooterMotor;
   private DcMotor centershooterMotor;
@@ -25,30 +28,28 @@ public class AUTO extends LinearOpMode {
   private DcMotor backrightMotor;
   private DcMotor frontleftMotor;
 
-  boolean USE_WEBCAM;
-  AprilTagProcessor myAprilTagProcessor;
 
-  /**
-   * Describe this function...
-   */
+  boolean USE_WEBCAM;  // Decide if we use webcam or phone camera
+  AprilTagProcessor myAprilTagProcessor; // For detecting AprilTags
+
+
+    // Example autonomous routine for AprilTag ID 21
   private void GPP__ID_21_() {
-    USE_WEBCAM = false;
-    backwards(0.7, 1850);
-    sleep(400);
+    USE_WEBCAM = false; // Turn off webcam (just an example)
+    backwards(0.7, 1850); // Move backward at 70% speed for 1850 encoder ticks
+    sleep(400); // Wait 0.4 sec
     Turn_Left_3();
     sleep(400);
-    collect_1();
+    collect_1(); // Collect some game element
     sleep(400);
-    backwards(0.7, 2000);
+    backwards(0.7, 2000); // Move backward more
     sleep(400);
-    Turn_Right_2();
+    Turn_Right_2(); // Turn right
     sleep(400);
-    forwards(0.7, 2300);
+    forwards(0.7, 2300); // Move forward
   }
 
-  /**
-   * Describe this function...
-   */
+
   private void PGP__ID_22_() {
     USE_WEBCAM = false;
     backwards(0.7, 800);
@@ -85,31 +86,29 @@ public class AUTO extends LinearOpMode {
     shoot_3_close();
   }
 
-  /**
-   * Describe this function...
-   */
+
+    // Shooting function
   private void shoot_3_close() {
-    leftshooterMotor.setPower(0.7);
-    rightshooterMotor.setPower(0.7);
-    centershooterMotor.setPower(0.5);
-    sleep(400);
-    beltMotor.setPower(1);
-    sleep(6000);
-    centershooterMotor.setPower(0);
+    leftshooterMotor.setPower(0.7); // Start left shooter
+    rightshooterMotor.setPower(0.7); // Start right shooter
+    centershooterMotor.setPower(0.5); // Start middle shooter
+    sleep(400); // Wait a bit
+    beltMotor.setPower(1);  // Move belt to feed balls
+    sleep(6000); // Shoot for 6 sec
+    centershooterMotor.setPower(0); // Stop all motors
     rightshooterMotor.setPower(0);
     leftshooterMotor.setPower(0);
     beltMotor.setPower(0);
   }
 
-  /**
-   * Describe this function...
-   */
+
+    // Collecting function
   private void collect_1() {
-    beltMotor.setPower(1);
+    beltMotor.setPower(1); // Start belt
+    sleep(500); // Wait 0.5 sec
+    straight_1(); // Move forward to pick something
     sleep(500);
-    straight_1();
-    sleep(500);
-    beltMotor.setPower(0);
+    beltMotor.setPower(0); // Stop belt
   }
 
   /**
@@ -129,8 +128,11 @@ public class AUTO extends LinearOpMode {
    * "detection", and is explained in the ftc-docs page linked below.
    * https://ftc-docs.firstinspires.org/apriltag-detection-values
    */
+
+  // The main run function
   @Override
   public void runOpMode() {
+      // Map hardware names from robot config to variables
     leftshooterMotor = hardwareMap.get(DcMotor.class, "leftshooterMotor");
     rightshooterMotor = hardwareMap.get(DcMotor.class, "rightshooterMotor");
     centershooterMotor = hardwareMap.get(DcMotor.class, "centershooterMotor");
@@ -141,55 +143,65 @@ public class AUTO extends LinearOpMode {
     frontleftMotor = hardwareMap.get(DcMotor.class, "frontleftMotor");
 
     // Initialize AprilTag before waitForStart.
-    initAprilTag();
-    USE_WEBCAM = true;
+    initAprilTag(); // Setup camera and AprilTag detection
+    USE_WEBCAM = true; // Enable webcam
     // Wait for the match to begin.
     telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
     telemetry.addData(">", "Touch START to start OpMode");
+
+      // Setup directions (some motors need to run reversed)
     backleftMotor.setDirection(DcMotor.Direction.REVERSE);
     frontrightMotor.setDirection(DcMotor.Direction.REVERSE);
     rightshooterMotor.setDirection(DcMotor.Direction.REVERSE);
-    waitForStart();
+    waitForStart(); // Wait until the match starts
     telemetry.update();
     if (opModeIsActive()) {
       // Put run blocks here.
-      backwards(0.7, 2500);
+      backwards(0.7, 2500); // Move backward at start
       sleep(500);
-      shoot_3_close();
+      shoot_3_close(); // Shoot
       sleep(500);
-      Turn_Right();
-      telemetry.update();
+      Turn_Right(); // Turn right
+      telemetry.update(); // Show info on Driver Station
       while (opModeIsActive()) {
         // Put loop blocks here.
-        telemetryAprilTag();
+        telemetryAprilTag(); // Detect AprilTags and do actions
         // Push telemetry to the Driver Station.
-        telemetry.update();
+        telemetry.update(); // Update info
         // Share the CPU.
-        sleep(20);
+        sleep(20); // Small pause to not overload CPU
       }
     }
   }
 
-  /**
-   * Describe this function...
-   */
+
+    // Example: Move backwards
   private void backwards(double Speed, int Target_pos) {
+      // Reset motor encoders
     backleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     backrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     frontleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     frontrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+      // Set target position
     backleftMotor.setTargetPosition(-1 * Target_pos);
     backrightMotor.setTargetPosition(-1 * Target_pos);
     frontleftMotor.setTargetPosition(-1 * Target_pos);
     frontrightMotor.setTargetPosition(-1 * Target_pos);
+
+      // Set speed
     backleftMotor.setPower(Speed);
     backrightMotor.setPower(Speed);
     frontleftMotor.setPower(Speed);
     frontrightMotor.setPower(Speed);
+
+      // Run motors to target
     backleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     backrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     frontleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     frontrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+      // Wait until motors finish
     while (opModeIsActive() && backrightMotor.isBusy()) {
       telemetry.update();
     }
@@ -205,26 +217,34 @@ public class AUTO extends LinearOpMode {
     }
   }
 
-  /**
-   * Describe this function...
-   */
+
+    // Turn left (similar idea to backwards)
   private void Turn_Left_1() {
+      // Reset encoders
     backleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     backrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     frontleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     frontrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+      // Set positions for turning left (left motors go back, right motors go forward)
     backleftMotor.setTargetPosition(-1200);
     backrightMotor.setTargetPosition(1200);
     frontleftMotor.setTargetPosition(-1200);
     frontrightMotor.setTargetPosition(1200);
+
+       // Set speed
     backleftMotor.setPower(0.5);
     backrightMotor.setPower(0.5);
     frontleftMotor.setPower(0.5);
     frontrightMotor.setPower(0.5);
+
+      // Run to position
     backleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     backrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     frontleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     frontrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+      // Wait until motors finish
     while (opModeIsActive() && backrightMotor.isBusy()) {
       telemetry.update();
     }
@@ -240,9 +260,9 @@ public class AUTO extends LinearOpMode {
     }
   }
 
-  /**
-   * Describe this function...
-   */
+
+    // Similar functions: forwards(), straight_1(), straight_2(), Turn_Right(), etc.
+    // They all reset encoders, set target positions, run motors, and wait until done.
   private void straight_1() {
     backleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     backrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -345,9 +365,8 @@ public class AUTO extends LinearOpMode {
     }
   }
 
-  /**
-   * Initialize AprilTag Detection.
-   */
+
+    // Setup camera and AprilTag detection
   private void initAprilTag() {
     AprilTagProcessor.Builder myAprilTagProcessorBuilder;
     VisionPortal.Builder myVisionPortalBuilder;
@@ -356,37 +375,38 @@ public class AUTO extends LinearOpMode {
     // First, create an AprilTagProcessor.Builder.
     myAprilTagProcessorBuilder = new AprilTagProcessor.Builder();
     // Create an AprilTagProcessor by calling build.
-    myAprilTagProcessor = myAprilTagProcessorBuilder.build();
+    myAprilTagProcessor = myAprilTagProcessorBuilder.build(); // Processor to detect tags
     // Next, create a VisionPortal.Builder and set attributes related to the camera.
     myVisionPortalBuilder = new VisionPortal.Builder();
     if (USE_WEBCAM) {
       // Use a webcam.
-      myVisionPortalBuilder.setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"));
+      myVisionPortalBuilder.setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")); // Use webcam
     } else {
       // Use the device's back camera.
-      myVisionPortalBuilder.setCamera(BuiltinCameraDirection.BACK);
+      myVisionPortalBuilder.setCamera(BuiltinCameraDirection.BACK); // Use phone camera
     }
     // Add myAprilTagProcessor to the VisionPortal.Builder.
-    myVisionPortalBuilder.addProcessor(myAprilTagProcessor);
+    myVisionPortalBuilder.addProcessor(myAprilTagProcessor); // Add tag processor
     // Create a VisionPortal by calling build.
-    myVisionPortal = myVisionPortalBuilder.build();
+    myVisionPortal = myVisionPortalBuilder.build(); // Build portal
   }
 
-  /**
-   * Display info (using telemetry) for a recognized AprilTag.
-   */
+
+// Display info about detected AprilTags
   private void telemetryAprilTag() {
     List<AprilTagDetection> myAprilTagDetections;
     AprilTagDetection myAprilTagDetection;
 
     // Get a list of AprilTag detections.
-    myAprilTagDetections = myAprilTagProcessor.getDetections();
-    telemetry.addData("# AprilTags Detected", JavaUtil.listLength(myAprilTagDetections));
+    myAprilTagDetections = myAprilTagProcessor.getDetections();  // Get list of tags
+    telemetry.addData("# AprilTags Detected", JavaUtil.listLength(myAprilTagDetections));  // Show count
     // Iterate through list and call a function to display info for each recognized AprilTag.
     for (AprilTagDetection myAprilTagDetection_item : myAprilTagDetections) {
       myAprilTagDetection = myAprilTagDetection_item;
       // Display info about the detection.
       telemetry.addLine("Low ");
+
+        // Show info on Driver Station
       if (myAprilTagDetection.metadata != null) {
         telemetry.addLine("==== (ID " + myAprilTagDetection.id + ") " + myAprilTagDetection.metadata.name);
         telemetry.addLine("XYZ " + JavaUtil.formatNumber(myAprilTagDetection.ftcPose.x, 6, 1) + " " + JavaUtil.formatNumber(myAprilTagDetection.ftcPose.y, 6, 1) + " " + JavaUtil.formatNumber(myAprilTagDetection.ftcPose.z, 6, 1) + "  (inch)");
@@ -396,6 +416,8 @@ public class AUTO extends LinearOpMode {
         telemetry.addLine("Center " + JavaUtil.formatNumber(myAprilTagDetection.center.x, 6, 0) + "" + JavaUtil.formatNumber(myAprilTagDetection.center.y, 6, 0) + " (pixels)");
       } else {
       }
+
+        // Run autonomous routine based on detected tag
       if (myAprilTagDetection.id == 21) {
         GPP__ID_21_();
       }
