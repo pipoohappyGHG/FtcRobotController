@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.lynx.commands.core.LynxIsMotorAtTargetResponse;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+
+import java.lang.annotation.Target;
 import java.util.List;
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
@@ -107,7 +110,7 @@ public class AUTO extends LinearOpMode {
   private void collect_1() {
     beltMotor.setPower(1);
     sleep(500);
-    straight_1();
+    straight();
     sleep(500);
     beltMotor.setPower(0);
   }
@@ -208,19 +211,19 @@ public class AUTO extends LinearOpMode {
   /**
    * Describe this function...
    */
-  private void Turn_Left_1() {
+  private void Turn_Left_1(double Speed, int Target_pos) {
     backleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     backrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     frontleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     frontrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    backleftMotor.setTargetPosition(-1200);
-    backrightMotor.setTargetPosition(1200);
-    frontleftMotor.setTargetPosition(-1200);
-    frontrightMotor.setTargetPosition(1200);
-    backleftMotor.setPower(0.5);
-    backrightMotor.setPower(0.5);
-    frontleftMotor.setPower(0.5);
-    frontrightMotor.setPower(0.5);
+    backleftMotor.setTargetPosition(-1 * Target_pos);
+    backrightMotor.setTargetPosition(Target_pos);
+    frontleftMotor.setTargetPosition(-1 * Target_pos);
+    frontrightMotor.setTargetPosition(Target_pos);
+    backleftMotor.setPower(Speed);
+    backrightMotor.setPower(Speed);
+    frontleftMotor.setPower(Speed);
+    frontrightMotor.setPower(Speed);
     backleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     backrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     frontleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -243,19 +246,19 @@ public class AUTO extends LinearOpMode {
   /**
    * Describe this function...
    */
-  private void straight_1() {
+  private void straight(double Speed, int Target_pos) {
     backleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     backrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     frontleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     frontrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    backleftMotor.setTargetPosition(1500);
-    backrightMotor.setTargetPosition(1500);
-    frontleftMotor.setTargetPosition(1500);
-    frontrightMotor.setTargetPosition(1500);
-    backleftMotor.setPower(0.25);
-    backrightMotor.setPower(0.25);
-    frontleftMotor.setPower(0.25);
-    frontrightMotor.setPower(0.25);
+    backleftMotor.setTargetPosition(Target_pos);
+    backrightMotor.setTargetPosition(Target_pos);
+    frontleftMotor.setTargetPosition(Target_pos);
+    frontrightMotor.setTargetPosition(Target_pos);
+    backleftMotor.setPower(Speed);
+    backrightMotor.setPower(Speed);
+    frontleftMotor.setPower(Speed);
+    frontrightMotor.setPower(Speed);
     backleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     backrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     frontleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
