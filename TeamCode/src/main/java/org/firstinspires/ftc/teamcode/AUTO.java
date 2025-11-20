@@ -36,13 +36,13 @@ public class AUTO extends LinearOpMode {
     USE_WEBCAM = false;
     backwards(0.7, 1850);
     sleep(400);
-    Turn_Left_3();
+    Turn(0.5, 1);
     sleep(400);
     collect_1();
     sleep(400);
     backwards(0.7, 2000);
     sleep(400);
-    Turn_Right_2();
+    Turn(0.5, 1);
     sleep(400);
     forwards(0.7, 2300);
   }
@@ -54,16 +54,16 @@ public class AUTO extends LinearOpMode {
     USE_WEBCAM = false;
     backwards(0.7, 800);
     sleep(400);
-    Turn_Left_3();
+    Turn(0.5, 1);
     sleep(400);
     collect_1();
     sleep(400);
     backwards(0.7, 2000);
-    Turn_Right();
+    Turn(0.5, 1);
     sleep(400);
     forwards(0.7, 1000);
     sleep(400);
-    Turn_Left_2();
+    Turn(0.5, 1);
     sleep(400);
     shoot_3_close();
   }
@@ -73,15 +73,15 @@ public class AUTO extends LinearOpMode {
    */
   private void PPG__ID_23_() {
     USE_WEBCAM = false;
-    straight_2();
+    forwards(0.7, 1500);
     sleep(300);
-    Turn_Left_2();
+    Turn(0.7, 1);
     sleep(400);
     collect_1();
     sleep(400);
     backwards(0.7, 2000);
     sleep(400);
-    Turn_Right();
+    Turn(0.7, 1);
     sleep(400);
     shoot_3_close();
   }
@@ -108,22 +108,19 @@ public class AUTO extends LinearOpMode {
   private void collect_1() {
     beltMotor.setPower(1);
     sleep(500);
-    straight_1 (0.7, 2500);
+    forwards (0.7, 2500);
     sleep(500);
     beltMotor.setPower(0);
   }
 
   /**
    * This OpMode illustrates the basics of AprilTag recognition and pose estimation.
-   *
    * For an introduction to AprilTags, see the FTC-DOCS link below:
    * https://ftc-docs.firstinspires.org/en/latest/apriltag/vision_portal/apriltag_intro/apriltag-intro.html
-   *
    * In this sample, any visible tag ID will be detected and
    * displayed, but only tags that are included in the default
    * "TagLibrary" will have their position and orientation information displayed. This default TagLibrary contains
    * the current Season's AprilTags and a small set of "test Tags" in the high number range.
-   *
    * When an AprilTag in the TagLibrary is detected, the SDK provides
    * location and orientation of the tag, relative to the camera.
    * This information is provided in the "ftcPose" member of the returned
@@ -158,7 +155,7 @@ public class AUTO extends LinearOpMode {
       sleep(500);
       shoot_3_close();
       sleep(500);
-      Turn_Right();
+      Turn(0.5, 1);
       telemetry.update();
       while (opModeIsActive()) {
         // Put loop blocks here.
@@ -209,89 +206,19 @@ public class AUTO extends LinearOpMode {
   /**
    * Describe this function...
    */
-  private void Turn_Left_1(double Speed, int Target_pos) {
+  private void Turn(double Speed, int Target_pos) {
     backleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     backrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     frontleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     frontrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    backleftMotor.setTargetPosition(-1 * Target_pos);
-    backrightMotor.setTargetPosition(1 * Target_pos);
-    frontleftMotor.setTargetPosition(-1 * Target_pos);
-    frontrightMotor.setTargetPosition(1 * Target_pos);
+    backleftMotor.setTargetPosition(Target_pos);
+    backrightMotor.setTargetPosition(-1 * Target_pos);
+    frontleftMotor.setTargetPosition(Target_pos);
+    frontrightMotor.setTargetPosition(-1 * Target_pos);
     backleftMotor.setPower(Speed);
     backrightMotor.setPower(Speed);
     frontleftMotor.setPower(Speed);
     frontrightMotor.setPower(Speed);
-    backleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    backrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    frontleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    frontrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    while (opModeIsActive() && backrightMotor.isBusy()) {
-      telemetry.update();
-    }
-    while (opModeIsActive() && frontleftMotor.isBusy()) {
-      telemetry.update();
-    }
-    while (opModeIsActive() && frontrightMotor.isBusy()) {
-      telemetry.update();
-    }
-    while (opModeIsActive() && backleftMotor.isBusy()) {
-      telemetry.update();
-      break;
-    }
-  }
-
-  /**
-   * Describe this function...
-   */
-  private void straight_1(double Speed, int Target_pos) {
-    backleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    backrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    frontleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    frontrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    backleftMotor.setTargetPosition(1500);
-    backrightMotor.setTargetPosition(1500);
-    frontleftMotor.setTargetPosition(1500);
-    frontrightMotor.setTargetPosition(1500);
-    backleftMotor.setPower(0.25);
-    backrightMotor.setPower(0.25);
-    frontleftMotor.setPower(0.25);
-    frontrightMotor.setPower(0.25);
-    backleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    backrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    frontleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    frontrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    while (opModeIsActive() && backrightMotor.isBusy()) {
-      telemetry.update();
-    }
-    while (opModeIsActive() && frontleftMotor.isBusy()) {
-      telemetry.update();
-    }
-    while (opModeIsActive() && frontrightMotor.isBusy()) {
-      telemetry.update();
-    }
-    while (opModeIsActive() && backleftMotor.isBusy()) {
-      telemetry.update();
-      break;
-    }
-  }
-
-  /**
-   * Describe this function...
-   */
-  private void straight_3() {
-    backleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    backrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    frontleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    frontrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    backleftMotor.setTargetPosition(700);
-    backrightMotor.setTargetPosition(700);
-    frontleftMotor.setTargetPosition(700);
-    frontrightMotor.setTargetPosition(700);
-    backleftMotor.setPower(0.5);
-    backrightMotor.setPower(0.5);
-    frontleftMotor.setPower(0.5);
-    frontrightMotor.setPower(0.5);
     backleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     backrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     frontleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -394,8 +321,7 @@ public class AUTO extends LinearOpMode {
         telemetry.addLine("PRY " + JavaUtil.formatNumber(myAprilTagDetection.ftcPose.pitch, 6, 1) + " " + JavaUtil.formatNumber(myAprilTagDetection.ftcPose.roll, 6, 1) + " " + JavaUtil.formatNumber(myAprilTagDetection.ftcPose.yaw, 6, 1) + "  (deg)");
         telemetry.addLine("RBE " + JavaUtil.formatNumber(myAprilTagDetection.ftcPose.range, 6, 1) + " " + JavaUtil.formatNumber(myAprilTagDetection.ftcPose.bearing, 6, 1) + " " + JavaUtil.formatNumber(myAprilTagDetection.ftcPose.elevation, 6, 1) + "  (inch, deg, deg)");
         telemetry.addLine("==== (ID " + myAprilTagDetection.id + ") Unknown");
-        telemetry.addLine("Center " + JavaUtil.formatNumber(myAprilTagDetection.center.x, 6, 0) + "" + JavaUtil.formatNumber(myAprilTagDetection.center.y, 6, 0) + " (pixels)");
-      } else {
+        telemetry.addLine("Center " + JavaUtil.formatNumber(myAprilTagDetection.center.x, 6, 0) + JavaUtil.formatNumber(myAprilTagDetection.center.y, 6, 0) + " (pixels)");
       }
       if (myAprilTagDetection.id == 21) {
         GPP__ID_21_();
@@ -412,180 +338,5 @@ public class AUTO extends LinearOpMode {
     telemetry.addLine("XYZ = X (Right), Y (Forward), Z (Up) dist.");
     telemetry.addLine("PRY = Pitch, Roll & Yaw (XYZ Rotation)");
     telemetry.addLine("RBE = Range, Bearing & Elevation");
-  }
-
-  /**
-   * Describe this function...
-   */
-  private void Turn_Right() {
-    backleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    backrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    frontleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    frontrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    backleftMotor.setTargetPosition(600);
-    backrightMotor.setTargetPosition(-600);
-    frontleftMotor.setTargetPosition(600);
-    frontrightMotor.setTargetPosition(-600);
-    backleftMotor.setPower(0.5);
-    backrightMotor.setPower(0.5);
-    frontleftMotor.setPower(0.5);
-    frontrightMotor.setPower(0.5);
-    backleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    backrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    frontleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    frontrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    while (opModeIsActive() && backrightMotor.isBusy()) {
-      telemetry.update();
-    }
-    while (opModeIsActive() && frontleftMotor.isBusy()) {
-      telemetry.update();
-    }
-    while (opModeIsActive() && frontrightMotor.isBusy()) {
-      telemetry.update();
-    }
-    while (opModeIsActive() && backleftMotor.isBusy()) {
-      telemetry.update();
-      break;
-    }
-  }
-
-  /**
-   * Describe this function...
-   */
-  private void straight_2() {
-    backleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    backrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    frontleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    frontrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    backleftMotor.setTargetPosition(400);
-    backrightMotor.setTargetPosition(400);
-    frontleftMotor.setTargetPosition(400);
-    frontrightMotor.setTargetPosition(400);
-    backleftMotor.setPower(0.7);
-    backrightMotor.setPower(0.7);
-    frontleftMotor.setPower(0.7);
-    frontrightMotor.setPower(0.7);
-    backleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    backrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    frontleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    frontrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    while (opModeIsActive() && backrightMotor.isBusy()) {
-      telemetry.update();
-    }
-    while (opModeIsActive() && frontleftMotor.isBusy()) {
-      telemetry.update();
-    }
-    while (opModeIsActive() && frontrightMotor.isBusy()) {
-      telemetry.update();
-    }
-    while (opModeIsActive() && backleftMotor.isBusy()) {
-      telemetry.update();
-      break;
-    }
-  }
-
-  /**
-   * Describe this function...
-   */
-  private void Turn_Left_3() {
-    backleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    backrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    frontleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    frontrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    backleftMotor.setTargetPosition(-975);
-    backrightMotor.setTargetPosition(975);
-    frontleftMotor.setTargetPosition(-975);
-    frontrightMotor.setTargetPosition(975);
-    backleftMotor.setPower(0.5);
-    backrightMotor.setPower(0.5);
-    frontleftMotor.setPower(0.5);
-    frontrightMotor.setPower(0.5);
-    backleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    backrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    frontleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    frontrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    while (opModeIsActive() && backrightMotor.isBusy()) {
-      telemetry.update();
-    }
-    while (opModeIsActive() && frontleftMotor.isBusy()) {
-      telemetry.update();
-    }
-    while (opModeIsActive() && frontrightMotor.isBusy()) {
-      telemetry.update();
-    }
-    while (opModeIsActive() && backleftMotor.isBusy()) {
-      telemetry.update();
-      break;
-    }
-  }
-
-  /**
-   * Describe this function...
-   */
-  private void Turn_Left_2() {
-    backleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    backrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    frontleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    frontrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    backleftMotor.setTargetPosition(-700);
-    backrightMotor.setTargetPosition(700);
-    frontleftMotor.setTargetPosition(-700);
-    frontrightMotor.setTargetPosition(700);
-    backleftMotor.setPower(0.7);
-    backrightMotor.setPower(0.7);
-    frontleftMotor.setPower(0.7);
-    frontrightMotor.setPower(0.7);
-    backleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    backrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    frontleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    frontrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    while (opModeIsActive() && backrightMotor.isBusy()) {
-      telemetry.update();
-    }
-    while (opModeIsActive() && frontleftMotor.isBusy()) {
-      telemetry.update();
-    }
-    while (opModeIsActive() && frontrightMotor.isBusy()) {
-      telemetry.update();
-    }
-    while (opModeIsActive() && backleftMotor.isBusy()) {
-      telemetry.update();
-      break;
-    }
-  }
-
-  /**
-   * Describe this function...
-   */
-  private void Turn_Right_2() {
-    backleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    backrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    frontleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    frontrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    backleftMotor.setTargetPosition(800);
-    backrightMotor.setTargetPosition(-800);
-    frontleftMotor.setTargetPosition(800);
-    frontrightMotor.setTargetPosition(-800);
-    backleftMotor.setPower(0.5);
-    backrightMotor.setPower(0.5);
-    frontleftMotor.setPower(0.5);
-    frontrightMotor.setPower(0.5);
-    backleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    backrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    frontleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    frontrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    while (opModeIsActive() && backrightMotor.isBusy()) {
-      telemetry.update();
-    }
-    while (opModeIsActive() && frontleftMotor.isBusy()) {
-      telemetry.update();
-    }
-    while (opModeIsActive() && frontrightMotor.isBusy()) {
-      telemetry.update();
-    }
-    while (opModeIsActive() && backleftMotor.isBusy()) {
-      telemetry.update();
-      break;
-    }
   }
 }
