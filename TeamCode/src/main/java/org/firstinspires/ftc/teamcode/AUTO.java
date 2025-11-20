@@ -5,8 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
-import java.lang.annotation.Target;
 import java.util.List;
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
@@ -110,7 +108,7 @@ public class AUTO extends LinearOpMode {
   private void collect_1() {
     beltMotor.setPower(1);
     sleep(500);
-    straight();
+    straight_1 (0.7, 2500);
     sleep(500);
     beltMotor.setPower(0);
   }
@@ -217,9 +215,9 @@ public class AUTO extends LinearOpMode {
     frontleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     frontrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     backleftMotor.setTargetPosition(-1 * Target_pos);
-    backrightMotor.setTargetPosition(Target_pos);
+    backrightMotor.setTargetPosition(1 * Target_pos);
     frontleftMotor.setTargetPosition(-1 * Target_pos);
-    frontrightMotor.setTargetPosition(Target_pos);
+    frontrightMotor.setTargetPosition(1 * Target_pos);
     backleftMotor.setPower(Speed);
     backrightMotor.setPower(Speed);
     frontleftMotor.setPower(Speed);
@@ -246,19 +244,19 @@ public class AUTO extends LinearOpMode {
   /**
    * Describe this function...
    */
-  private void straight(double Speed, int Target_pos) {
+  private void straight_1(double Speed, int Target_pos) {
     backleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     backrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     frontleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     frontrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    backleftMotor.setTargetPosition(Target_pos);
-    backrightMotor.setTargetPosition(Target_pos);
-    frontleftMotor.setTargetPosition(Target_pos);
-    frontrightMotor.setTargetPosition(Target_pos);
-    backleftMotor.setPower(Speed);
-    backrightMotor.setPower(Speed);
-    frontleftMotor.setPower(Speed);
-    frontrightMotor.setPower(Speed);
+    backleftMotor.setTargetPosition(1500);
+    backrightMotor.setTargetPosition(1500);
+    frontleftMotor.setTargetPosition(1500);
+    frontrightMotor.setTargetPosition(1500);
+    backleftMotor.setPower(0.25);
+    backrightMotor.setPower(0.25);
+    frontleftMotor.setPower(0.25);
+    frontrightMotor.setPower(0.25);
     backleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     backrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     frontleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
