@@ -16,7 +16,6 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 @Autonomous(name = "AUTO (Blocks to Java)", preselectTeleOp = "Derek Jr.")
 @Disabled
 public class AUTO extends LinearOpMode {
-
   private DcMotor leftshooterMotor;
   private DcMotor rightshooterMotor;
   private DcMotor centershooterMotor;
