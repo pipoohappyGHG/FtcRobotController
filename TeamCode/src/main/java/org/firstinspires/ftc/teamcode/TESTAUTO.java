@@ -89,8 +89,8 @@ import java.util.concurrent.TimeUnit;
  *
  */
 
-@Autonomous(name="Omni Drive To AprilTag", group = "Concept")
-public class RobotAutoDriveToAprilTagOmni extends LinearOpMode
+@Autonomous(name="Test Auto", group = "Concept")
+public class TESTAUTO extends LinearOpMode
 {
     // Adjust these numbers to suit your robot.
     final double DESIRED_DISTANCE = 77; //  this is how close the camera should get to the target (inches)
