@@ -3,18 +3,19 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name = "DerekJr (Blocks to Java)")
+@TeleOp(name = "DerekJr2 (Blocks to Java)")
 public class DerekJr extends LinearOpMode {
 
-  private DcMotor rightshooterMotor;
   private DcMotor frontleftMotor;
   private DcMotor backrightMotor;
   private DcMotor backleftMotor;
   private DcMotor frontrightMotor;
-  private DcMotor leftshooterMotor;
   private DcMotor beltMotor;
-  private DcMotor centershooterMotor;
+  private DcMotor shootMotor;
+  private Servo kickServo;
+  private Servo angleServo;
 
   /**
    * This sample contains the bare minimum Blocks for any regular OpMode. The 3 blue
@@ -34,17 +35,16 @@ public class DerekJr extends LinearOpMode {
     double frontRightpower;
     double backRightpower;
 
-    rightshooterMotor = hardwareMap.get(DcMotor.class, "rightshooterMotor");
     frontleftMotor = hardwareMap.get(DcMotor.class, "frontleftMotor");
     backrightMotor = hardwareMap.get(DcMotor.class, "backrightMotor");
     backleftMotor = hardwareMap.get(DcMotor.class, "backleftMotor");
     frontrightMotor = hardwareMap.get(DcMotor.class, "frontrightMotor");
-    leftshooterMotor = hardwareMap.get(DcMotor.class, "leftshooterMotor");
     beltMotor = hardwareMap.get(DcMotor.class, "beltMotor");
-    centershooterMotor = hardwareMap.get(DcMotor.class, "centershooterMotor");
+    shootMotor = hardwareMap.get(DcMotor.class, "shootMotor");
+    kickServo = hardwareMap.get(Servo.class, "kickServo");
+    angleServo = hardwareMap.get(Servo.class, "angleServo");
 
     waitForStart();
-    rightshooterMotor.setDirection(DcMotor.Direction.REVERSE);
     frontleftMotor.setDirection(DcMotor.Direction.REVERSE);
     backrightMotor.setDirection(DcMotor.Direction.REVERSE);
     if (opModeIsActive()) {
@@ -61,23 +61,27 @@ public class DerekJr extends LinearOpMode {
         backleftMotor.setPower(backLeftpower);
         frontrightMotor.setPower(frontRightpower);
         backrightMotor.setPower(backRightpower);
-        leftshooterMotor.setPower(1 * gamepad2.right_trigger);
-        rightshooterMotor.setPower(1 * gamepad2.right_trigger);
         beltMotor.setPower(gamepad2.left_trigger);
-        if (gamepad2.square) {
-          centershooterMotor.setPower(1);
+        if (gamepad2.right_bumper) {
+          shootMotor.setPower(0.9);
         } else {
-          centershooterMotor.setPower(0);
+          shootMotor.setPower(0);
         }
         if (gamepad2.left_bumper) {
           beltMotor.setPower(-1);
+          shootMotor.setPower(-0.5);
         }
-        if (gamepad2.right_bumper) {
-          leftshooterMotor.setPower(0.8);
-          rightshooterMotor.setPower(0.8);
-        } else {
-          leftshooterMotor.setPower(0);
-          rightshooterMotor.setPower(0);
+        if (gamepad2.square) {
+          kickServo.setPosition(1);
+        }
+        if (gamepad2.squareWasReleased()) {
+          kickServo.setPosition(0);
+        }
+        if (gamepad2.dpad_up) {
+          angleServo.setPosition(0.4);
+        }
+        if (gamepad2.dpad_down) {
+          angleServo.setPosition(0.8);
         }
       }
     }
